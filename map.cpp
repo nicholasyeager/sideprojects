@@ -71,6 +71,7 @@ int main(){
 
     while(1){
         cout << "Enter command:" << endl;
+        cin >> input;
         if (input == "q"){
             break;
         }

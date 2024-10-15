@@ -41,6 +41,10 @@ void displayBoard(const vector<vector<Cell>> &a){
     }
 }
 
+void shiftRight(vector<vector<Cell>> &a){
+
+}
+
 void instructions(){
     cout << "The objective of this game is to reach the square of your opponent. You both are allowed to move once per turn." << endl;
     cout << "To quit enter 'q', else enter either 'up', 'down', 'left', or 'right'" << endl;
@@ -68,7 +72,6 @@ int main(){
     displayBoard(board);
     instructions();
 
-
     while(1){
         cout << "Enter command:" << endl;
         cin >> input;
@@ -76,7 +79,7 @@ int main(){
             break;
         }
         else if (input == "right"){
-            
+            shiftRight(board);
         }
     }
 

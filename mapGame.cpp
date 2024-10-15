@@ -4,6 +4,8 @@
 
 using namespace std;
 
+//Need to find some intuitive way to use the number, in general take the game to another level of playability
+
 enum Status{player, passive, opponent};
 
 class Cell{
@@ -137,6 +139,7 @@ void moveOpponent(vector<vector<Cell>> &a, int rows, int cols){
 
 void instructions(){
     cout << "The objective of this game is to reach the square of your opponent. You both are allowed to move once per turn." << endl;
+    cout << "You will earn points based on grid size and how many moves you used" << endl;
     cout << "To quit enter 'q', else enter either 'up', 'down', 'left', or 'right'" << endl;
 }
 
@@ -162,8 +165,10 @@ int main(){
     displayBoard(board);
     instructions();
     bool opponent = true;
+    int moveCount = 0;
 
     while(1){
+        moveCount++;
         cout << "Enter command:" << endl;
         cin >> input;
         if (input == "q"){
@@ -191,7 +196,8 @@ int main(){
         cout << endl;
     }
     cout << "You did it!" << endl;
-    int score = cols * rows * 10;
+    int score = (cols * rows * 10) - (moveCount*10);
+    cout << "It took you: " << moveCount << " moves to win" << endl;
     cout << "Final Score: " << score << endl;
 
     return 0;

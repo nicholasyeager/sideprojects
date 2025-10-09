@@ -844,34 +844,52 @@ void initGlobalEnv() {
 
 int main(int argc, char *argv[]) {
     initGlobalEnv();
-    string filename = argv[1];
-    ifstream file(filename);
-    if (!file.is_open()) {
-        cerr << "Error: Cannot open file " << filename << endl;
-        return 0;
-    }
     string line;
-    stringstream buffer;
-    while (getline(file, line)) {
-        buffer << line << " ";
-    }
-    string content = buffer.str();
-    vector<string> tokens = tokenize(content);
+    vector<string> tokens;
     size_t pos = 0;
+    if (argc == 1){
+        string input;
+        while (getline(cin, input)){
+            tokens = tokenize(input);  
+            pos = 0;
 
-    cout << "Syntax is the test expression input followed by Pass/Fail with a dotted pair representing expected versus output" << endl;
-    cout << endl;
+            Value* expr = sexp(tokens, pos);     
 
-    while (pos < tokens.size()) {
-        Value* expr = sexp(tokens, pos);
-        Value* result = eval(expr, globalEnv);
-        printVal(expr);
-        cout << endl;
-        printVal(result);
-        cout << endl;
+            Value* result = eval(expr, globalEnv);            
+
+            printVal(result);                       
+            cout << endl;
+        }
     }
+    else{
+        string filename = argv[1];
+        ifstream file(filename);
+        if (!file.is_open()) {
+            cerr << "Error: Cannot open file " << filename << endl;
+            return 0;
+        }
+        stringstream buffer;
+        while (getline(file, line)) {
+            buffer << line << " ";
+        }
+        string content = buffer.str();
+        tokens = tokenize(content);
+        pos = 0;
 
-    file.close();
+        cout << "Syntax is the test expression input followed by Pass/Fail with a dotted pair representing expected versus output" << endl;
+        cout << endl;
+
+        while (pos < tokens.size()) {
+            Value* expr = sexp(tokens, pos);
+            Value* result = eval(expr, globalEnv);
+            printVal(expr);
+            cout << endl;
+            printVal(result);
+            cout << endl;
+        }
+
+        file.close();
+    }
 
     return 0;
 }
